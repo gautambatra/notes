@@ -12,6 +12,9 @@ git add <files>
 # Add all modified/deleted files (doesn't add new files)
 git add -u
 
+# Add all files
+git add .
+
 # Unstaging all files from stage
 git reset
 
