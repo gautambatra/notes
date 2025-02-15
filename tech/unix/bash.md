@@ -37,5 +37,69 @@ popd # return to original directory
 `set -e`: exit on first error
 `set -u` : treat unset variables as errors
 
+## Useful options
+`set -o vi` : enable vi editing mode
+    in command mode: hit v to edit current command in text editor
+    [https://catonmat.net/bash-vi-editing-mode-cheat-sheet](cheet sheet)
+
+
+## Substrings
+```bash
+# get substring of a from index 12 of length 5
+b=${a:12:5}
+
+# remove prefix ending in "_"
+tmp=${a#*_}
+
+# remove suffix starting with "_"
+tmp=${a%_*}
+```
+
+## Arrays
+```bash
+# length of array
+len=${#myarr[@]}
+
+# print full array in 1 line
+echo "${myarr[*]}"
+
+# print each element in a separate line
+printf '%s\n' "${myarr[@]}"
+
+# multiline variable to array
+SAVEIFS=$IFS # save current IFS (Internal Field Separator)
+IFS=$'\n' # change IFS to newline
+names=($names) # split names string into an array with the same name
+IFS=$SAVEIFS # restore IFS
+
+# deleting single element from array
+arr=(one two three)
+delete=two
+echo ${arr[@]/$delete}
+
+array=("${arr[@]/$delete}") # quotes when working with strings
+
+# deleting more than one element
+delete=(two three)
+for del in ${delete[@]}; do
+    array=("${arr[@]/$del}")
+done
+
+```
+
+## Comparison
+```bash
+# numbers
+if [[ $a -gt $b ]]; then 
+# ...
+fi
+
+# strings
+if [[ "$a" == "$b" ]]; then
+# ...
+fi
+
+```
+
 
 ## strace
