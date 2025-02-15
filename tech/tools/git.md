@@ -9,6 +9,9 @@ git init [-b <branch>]
 ```
 git add <files>
 
+# Add all modified/deleted files (doesn't add new files)
+git add -u
+
 # Unstaging all files from stage
 git reset
 
@@ -41,7 +44,10 @@ git count-objects -v -H
 ## 4. Commit
 ```
 # Commit all staged files
-git comit -m "message"
+git commit -m "message"
+
+# automatically stage all modified files (new files not affected)
+git commit -a -m "message"
 
 # Commit specific files
 ```

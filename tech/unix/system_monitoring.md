@@ -28,3 +28,6 @@
 
 ## perf
 * For profiling commands
+
+## pstree 
+* Displays a hierarchical tree view of running processes
