@@ -10,3 +10,7 @@
 `echo $SHELL`: current shell
 `neofetch` display system info summary (need to install neofetch)
 `echo $BASH_VERSION`
+`uname` print system information
+    -a : all
+    -r : kernel only
+`lsb_release` Print distro info

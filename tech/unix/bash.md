@@ -102,4 +102,25 @@ fi
 ```
 
 
+## Test Command Flags
+-z : string has zero length
+-n : string has non-zero length
+-f : file exists
+-e : file exists and is a regular file
+-d : directory exists
+-s : file exists and has non-zero size
+
+
+## Log redirection
+```bash
+
+# Writing stdout and stderr to screen and file
+exec > >(tee -a ${logFile})
+exec 2> >(tee -a ${logFile})
+
+# Writing only to file
+exec >$logfile 2>&1
+```
+
+
 ## strace
