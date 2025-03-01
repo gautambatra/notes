@@ -43,6 +43,18 @@ popd # return to original directory
     [https://catonmat.net/bash-vi-editing-mode-cheat-sheet](cheet sheet)
 
 
+## Loops
+```bash
+# loop through range
+for i in {1..5}; do
+done
+
+# loop through custom range
+for i in $(seq $START $END); do
+done
+```
+
+
 ## Substrings
 ```bash
 # get substring of a from index 12 of length 5
@@ -53,6 +65,13 @@ tmp=${a#*_}
 
 # remove suffix starting with "_"
 tmp=${a%_*}
+```
+
+## Filename
+```bash
+# get current file name without extension
+name_with_ext=$(basename ${BASH_SOURCE})
+name=${name%.*}
 ```
 
 ## Arrays
@@ -83,6 +102,23 @@ array=("${arr[@]/$delete}") # quotes when working with strings
 delete=(two three)
 for del in ${delete[@]}; do
     array=("${arr[@]/$del}")
+done
+
+```
+
+## Associative Arrays
+```bash
+# Create
+declare -A arr
+${arr["key1"]}=val1
+${arr["key2"]}=val2
+
+# loop through keys
+for i in ${!arr[@]}; do
+done
+
+# loop through vals
+for i in ${arr[@]}; do
 done
 
 ```

@@ -43,6 +43,10 @@ sed '/^foo/q42' input.txt > output.txt
     echo '/^foo/d' > script.sed
     echo 's/hello/world/' >> script.sed
     sed -f script.sed input.txt > output.txt
+
+
+# Delete 5 lines after a pattern (including the line with the pattern)
+sed -i '/pattern/,+5d' input.txt
 ```
 
 `-E` : extended regex (like egrep)

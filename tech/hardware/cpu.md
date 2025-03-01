@@ -136,7 +136,7 @@ bool littleEndian = *intPtr == *shortPtr;
 
 ### Notes
 * Most of the times while decoding instructions, the CPU needs to read one or more bytes and then make a decision whether it needs to read more bytes for this instructions. In other words, it doesn't know when this instruction ends and the next one begins before reading a few bytes. This makes decoding multiple instructions per clock a much harder problem than if the instruction size were fixed.
-* Instruction writing/decoding is also made complex due to the fact that not all registers have the same functionality. For example, in 8086, for ax, bx, cx, and dx we can access the lower/higher byte, e.g., al, bh, etc., but for other registers we can't. Also, some registers can be used for specifying memory addresses and offsets, such as bp, bx, si, di, etc., but others can't.
+* Instruction writing/decoding is also made complex due to the fact that not all registers have the same functionality. For example, in 8086, for ax, bx, cx, and dx, we can access the lower/higher byte, e.g., al, bh, etc., but for other registers we can't. Also, some registers can be used for specifying memory addresses and offsets, such as bp, bx, si, di, etc., but others can't.
 
 ## References
 * [Casey Muratori - Intro to C on Windows - Day 1](https://youtu.be/F3ntGDm6hOs?si=P964JkO40Lo6mO4f)

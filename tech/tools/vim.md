@@ -21,6 +21,14 @@ ctrl + f
 ctrl + b
 ```
 
+## Tabs
+```
+# close other tabs
+:tabo
+
+# close current tab
+:tabc
+```
 
 ## Splits
 * :help splits
