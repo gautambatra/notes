@@ -1,0 +1,190 @@
+\documentclass[11pt,twoside,a4paper,titlepage]{article}
+\usepackage{xcolor}
+\usepackage{soul}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+\title{SystemVerilog Notes}
+\author{Gautam Batra}
+\date{\today}
+\maketitle
+
+
+\section{About SystemVerilog/Features}
+\begin{itemize}
+    \item Loosely typed
+    \item Variable types:
+        \begin{itemize}
+            \item Register
+            \item Integer
+            \item Time 
+            \item Real
+        \end{itemize}
+    \item Net type determines how it's resolved if it has multiple drivers
+    \item Several transistor and gate level primitives
+    \item Construct available for user defined primitives
+    \item Programmable Logic Array (PLA)  modelling mechanism
+    \item Propagation delay for nets and primitives
+    \item Drive strength for continuous assignments and primitives
+    \item Path delays, pulse filtering and timing checks for modules
+    \item Comprehensive, i.e., no user extensions
+    \item Description of HW as set of modules
+    \item Can instantiate one module in another (creates a copy)
+    \item 2 ways of specifying module:
+        \begin{enumerate}
+            \item Behavioral representation: program-like (starting point)
+            \item Structural representation: internal logic structure
+        \end{enumerate}
+    \item Modules interconnected by nets (like wires)
+    \item What we can do with SystemVerilog code
+        \begin{itemize}
+            \item Simulate system and verify the operation
+                \begin{itemize}
+                    \item Use \emph{test benches} to provide input and verify output
+                \end{itemize}
+            \item Use synthesis tool to map to HW
+                \begin{itemize}
+                    \item Converts it into netlist of low-level primitives
+                    \item HW could be ASIC or FPGA
+                    \item Don’t need testbenches, can directly test using real signals
+                    \item ASIC: high performance, high packing density, used in large numbers, expensivePGA: fast turnaround time, flexible, performance trade-off
+                \end{itemize}
+        \end{itemize}
+    \item \textbf{initial} : block executed only once
+    \item \textbf{\$monitor} : like printer (prints whenever any of the variables in brackets change)
+    \item \%b : bit
+    \item \textbf{\$dumpfile}: dump testbench changes to a vcd (value change dump) file
+    \item \textbf{\$dumpvars (0, testbenchModule)}: All variables to be dumped.
+    \item Test Bench
+        \begin{itemize}
+            \item \hl{the variables in the initial block that appear on LHS (ie, whose values we are changing) need to be declared as reg}
+            \item \hl{Other variables to be declared as wire}
+        \end{itemize}
+    \item Icarus verilog
+        \begin{itemize}
+            \item Iverilog -o <output\_file> source.v testbench.v \textbar p <output\_file>  //runs the simulation and prints results
+        \end{itemize}
+\end{itemize}
+\section{signals}
+\begin{itemize}
+    \item SystemVerilog supports 4 value levels
+        \begin{enumerate}
+            \item 0
+            \item 1
+            \item x : unknown (all registers initialized to x)
+            \item z : high impedance (all unconnected nets)
+        \end{enumerate}
+    \item Signal strengths (in descending order):\\
+        \begin{center}
+            \begin{tabular}[c]{|l|l|} \hline
+                \textbf{Strength}  & \textbf{Type} \\
+                \hline
+                supply    &  Driving \\
+                \hline
+                strong    &  Driving \\
+                \hline
+                pull      &  Driving \\
+                \hline
+                large     &  Storage \\
+                \hline
+                weak      &  Driving \\
+                \hline
+                medium    &  Storage \\
+                \hline
+                small     &  Storage \\
+                \hline
+                highz     &  High Impedance \\
+                \hline
+            \end{tabular}
+        \end{center}
+        \begin{itemize}
+            \item If 2 signals get driven on a wire, stronger signal prevails
+            \item useful for MOS level circuits eg: dynamic MOS
+        \end{itemize}
+\end{itemize}
+\section{Data Types}
+\begin{enumerate}
+    \item Net
+        \begin{itemize}
+            \item \hl{Must be continuously driven}
+            \item \hl{Can't store a value}
+            \item Represents connection b/w HW elements
+            \item During synthesis always maps to a wire
+            \item 1 bit value by default
+            \item Default value is 'z' (high impedance state)
+                \begin{itemize}
+                    \item Not driven, neither 1 nor 0
+                \end{itemize}
+            \item Typically used to model connections b/w continuous assignments and instantiations 
+            \item Different types:
+                \begin{itemize}
+                    \item wire, wor, wand, tri, supply0, supply1, etc.
+                    \item wire and tri are equivalent
+                        \begin{itemize}
+                            \item Wire can only be driven using assign statements
+                        \end{itemize}
+                    \item wor and wand insert OR and AND respectively at the connection
+                    \item supply0 and supply1 model power supply connections
+                \end{itemize}
+        \end{itemize}
+    \item Register
+        \begin{itemize}
+            \item \hl{Retains/holds last value assigned}
+            \item \hl{Typically used to represent storage elements, sometimes can translate to combinational circuits also}
+            \item X = A + B // \hl{no 'assign'}
+            \item During synthesis, maps either to 'wire' or a 'storage cell' depending on the context of the assignment
+            \item Not to be confused with a hardware register, ie flip-flop
+            \item Register types in SystemVerilog \\
+                \begin{center}
+                    \begin{tabular}[c]{|l|l|} \hline
+                        reg    &  most common \\
+                        \hline
+                        integer  &  used for counting \\
+                        \hline
+                        real     &  floating point numbers \\
+                        \hline
+                        time     &  simulation time (not used in synthesis) \\
+                        \hline
+                    \end{tabular}
+                \end{center}
+        \end{itemize}
+        \begin{enumerate}
+            \item reg
+                \begin{itemize}
+                    \item default value = x
+                    \item can be assigned in synchronism with a clock or otherwise
+                    \item Treated as unsigned number
+                    \item \hl{Used to model actual sequential HW components like counters, shift registers, etc.}
+                    \item \hl{Can only be driven in procedural blocks like always and initial}
+                \end{itemize}
+            \item integer
+                \begin{itemize}
+                    \item signed
+                    \item default size is 32 bits (can't specify size)
+                    \item Synthesis tool determines the size using data flow analysis
+                \end{itemize}
+            \item real
+                \begin{itemize}
+                    \item floating point numbers
+                    \item if assigned to an integer, rounded off
+                \end{itemize}
+            \item time
+                \begin{itemize}
+                    \item store simulation time
+                    \item \emph{\$time} gives current simulation time 
+                \end{itemize}
+        \end{enumerate}
+\end{enumerate}
+\section{Module}
+\begin{itemize}
+    \item $\sim$ Function
+    \item Basic unit of HW
+    \item Can't contain definition of other modules
+        \begin{itemize}
+            \item Other modules can be instantiated inside a module
+            \item A copy of the instantiated module is embedded in the main (instantiating) module for each instantiation
+        \end{itemize}
+    \item Allows creation of hierarchy
+\end{itemize}
+
+\end{document}

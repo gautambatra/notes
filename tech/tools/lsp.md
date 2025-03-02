@@ -32,3 +32,10 @@
     * generate using bear:
     * bear -- <the compile command>
     * for cmake based projects, just add 
+
+* If basic headers are not found, CPLUS_INCLUDE_PATH env variable :
+  set export CPLUS_INCLUDE_PATH=/usr/include/c++/<version>:/usr/include/x86_64-linux-gnu/c++/<version>
+
+  To check version: ls /usr/include/c++
+  https://stackoverflow.com/questions/54521402/locating-iostream-in-clang-fatal-error-iostream-file-not-found 
+

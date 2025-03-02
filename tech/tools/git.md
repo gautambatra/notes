@@ -106,3 +106,9 @@ confgit remote add origin https://github.com/gautambatra/dotfiles.git
 confgit remote set-url origin git@github.com:gautambatra/dotfiles.git
 
 ```
+
+## Misc
+```bash
+# get latest changes
+git pull
+```
