@@ -48,6 +48,12 @@ bool littleEndian = *intPtr == *shortPtr;
 ```
 
 
+## Memory
+* Memory is just an array of bytes from the first byte of the RAM to the last, where we can load/store data to/from registers
+* CPU doesn't have high level memory concepts like allocation, objects, new, delete, garbage collection, etc
+
+
+
 ## Making the CPU run our program faster
 * Two main ways:
     1. Reduce the number of instructions fed to the CPU
