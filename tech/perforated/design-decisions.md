@@ -218,5 +218,9 @@ Where it's used:
 - Swarm links: copy the review URL (`gX`). Opening it in a browser was dropped *(2026-10-04)*.
 - ~~p4v escape hatches (`p4vc timelapse`, `revgraph`)~~ — removed *(2026-10-04)*, with every p4vc integration (`:P4 p4vc`, `gR`, the `p4vc` option).
 
+## Documentation
+
+- **README is the overview, `docs/user_guide.md` the details** *(2026-10-20)*: the README had grown to ~1000 lines / ~9700 words as every feature brought its details along (busy pop-up sentences in each section, internal p4 calls, colours, timings). The author asked for it crisper and less overwhelming. Now: highlights, quick start and tour, a few bullets per feature each linking to the guide, configuration (options block kept, collapsed), the keymap preset, the most used commands (the rest in `:h perforated`), troubleshooting, a short performance table, contributing. The guide has every feature in full, organised under headings; reference lists (every command, key, option) stay in the generated help rather than being repeated. Cross-cutting behaviour (busy pop-ups, messages, stacked pop-ups) is described once, in the guide's "Messages and pop-ups", instead of per feature; colours and highlight groups in one "Colours" section; implementation details (p4 calls, costs) only in the developer guide. Named `user_guide.md` at the author's request (not `guide.md`). Handwritten help sections were rejected: the help is generated from code, and markdown renders on GitHub.
+
 ## Testing
 - mini.test with child nvim; fake `p4` replaying recorded `-Mj` fixtures; real throwaway p4d (rsh, no daemon) for integration; nvim 0.11/0.12/nightly matrix; perf benchmarks with budgets in CI.
